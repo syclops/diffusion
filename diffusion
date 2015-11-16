@@ -1,7 +1,15 @@
 #!/usr/bin/env python
 
+import argparse
+
+DEFAULT_DEPTH = 7
+
 def main():
-    pass
+    parser = argparse.ArgumentParser()
+    parser.add_argument('depth', type=int, default=DEFAULT_DEPTH,
+                        help='Look this many revisions back')
+    parser.add_argument
+    args = parser.parse_args()
 
 if __name__ == '__main__':
     main()
