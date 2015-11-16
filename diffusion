@@ -1,17 +1,33 @@
 #!/usr/bin/env python
 
 import argparse
+import subprocess
 
 DEFAULT_DEPTH = 7
+
+def get_choices(depth, files):
+    log = subprocess.check_output(['svn', 'log', '-l' + str(depth), files])
+    revisions = []
+    for line in log.split('\n'):
+        if len(line.split(' | ')) > 1:
+            revisions.append(line.strip())
+    for i in range(len(revisions)):
+        print i+1, revisions[i]
+    left_index = int(raw_input('Left? '))
+    right_index = int(raw_input('Right? '))
+    left_rev = revisions[left_index - 1].split(' | ')[0][1:]
+    right_rev = revisions[right_index - 1].split(' | ')[0][1:]
+    return [left_rev, right_rev]
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--depth', type=int, default=DEFAULT_DEPTH,
                         help='Look this many revisions back')
-    parser.add_argument('file', nargs='*', default='',
+    parser.add_argument('files', nargs='*', default='',
                         help='File(s) to examine')
-    parser.add_argument
     args = parser.parse_args()
+    [left, right] = get_choices(args.depth, args.files)
+    print left, right
 
 if __name__ == '__main__':
     main()
