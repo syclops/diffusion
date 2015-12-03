@@ -12,9 +12,9 @@ def get_choices(depth, files):
         if len(line.split(' | ')) > 1:
             revisions.append(line.strip())
     for i in range(len(revisions)):
-        print i+1, revisions[i]
-    left_index = int(raw_input('Left? '))
-    right_index = int(raw_input('Right? '))
+        print '(' + str(depth-i) + ') '  + revisions[i]
+    left_index = depth - int(raw_input('Left? '))
+    right_index = depth - int(raw_input('Right? '))
     left_rev = revisions[left_index - 1].split(' | ')[0][1:]
     right_rev = revisions[right_index - 1].split(' | ')[0][1:]
     return [left_rev, right_rev]
